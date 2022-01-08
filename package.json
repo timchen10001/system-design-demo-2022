@@ -1,0 +1,13 @@
+{
+  "name": "instagram-clone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server:start": "cd server && yarn start",
+    "client:start": "cd client && yarn start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
