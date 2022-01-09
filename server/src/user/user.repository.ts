@@ -28,53 +28,57 @@ export class UserRepository {
   async findAll(findUserInput: FindUsersInput): Promise<UserEntity[]> {
     let queryBuilder = this.userRepository.createQueryBuilder('users');
 
-    if (findUserInput?.keyword) {
-      const suerKeywordSearchScope = UserKeywordSearchScope.map(
-        (s) => `"users"."${s}"`,
-      );
+    queryBuilder = ((qb) => {
+      if (findUserInput?.keyword) {
+        const userKeywordSearchScope = UserKeywordSearchScope.map(
+          (s) => `"users"."${s}"`,
+        );
 
-      queryBuilder = queryBuilder.andWhere(
-        `CONCAT_WS(',', ${suerKeywordSearchScope.join(',')}) LIKE '%${
-          findUserInput.keyword
-        }%'`,
-      );
-    } else {
+        return qb.andWhere(
+          `CONCAT_WS(',', ${userKeywordSearchScope.join(',')}) LIKE '%${
+            findUserInput.keyword
+          }%'`,
+        );
+      }
+
       if (findUserInput?.ids?.length) {
-        queryBuilder = queryBuilder.andWhere('id IN (:...ids)', {
+        qb = qb.andWhere('id IN (:...ids)', {
           ids: findUserInput.ids,
         });
       }
 
       if (findUserInput?.name) {
-        queryBuilder = queryBuilder.andWhere('name = :name', {
+        qb = qb.andWhere('name = :name', {
           name: findUserInput.name,
         });
       }
 
       if (findUserInput?.email) {
-        queryBuilder = queryBuilder.andWhere('email = :email', {
+        qb = qb.andWhere('email = :email', {
           email: findUserInput.email,
         });
       }
 
       if (findUserInput?.mobile) {
-        queryBuilder = queryBuilder.andWhere('mobile = :mobile', {
+        qb = qb.andWhere('mobile = :mobile', {
           mobile: findUserInput.mobile,
         });
       }
 
       if (findUserInput?.from) {
-        queryBuilder = queryBuilder.andWhere('createdAt >= :from', {
+        qb = qb.andWhere('createdAt >= :from', {
           from: findUserInput.from,
         });
       }
 
       if (findUserInput?.to) {
-        queryBuilder = queryBuilder.andWhere('createdAt <= :to', {
+        qb = qb.andWhere('createdAt <= :to', {
           to: findUserInput.to,
         });
       }
-    }
+
+      return qb;
+    })(queryBuilder);
 
     return queryBuilder.orderBy('users.createdAt', 'DESC').getMany();
   }
