@@ -23,7 +23,7 @@ import { AuthModule } from './auth/auth.module';
         type: 'postgres',
         host: config.get('TYPEORM_HOST') || 'localhost',
         port: 5432,
-        logger: 'debug',
+        logging: true,
         username: config.get('TYPEORM_USERNAME'),
         password: config.get('TYPEORM_PASSWORD'),
         database: config.get('TYPEORM_DATABASE') || 'demo01',

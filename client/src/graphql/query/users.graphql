@@ -1,0 +1,25 @@
+#import "../fragment/user.graphql"
+
+query Users(
+  $ids: [ID!]
+  $name: String
+  $email: String
+  $mobile: String
+  $from: String
+  $to: String
+  $keyword: String
+) {
+  users(
+    ids: $ids,
+    name: $name,
+    email: $email,
+    mobile: $mobile,
+    from: $from,
+    to: $to,
+    keyword: $keyword
+  ) {
+    users {
+      ...User
+    }
+  }
+}

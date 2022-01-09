@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeepPartial, EntityRepository, Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 import { FindUsersInput, UserKeywordSearchScope } from './dto/get-user-input';
 import { UserEntity } from './entities/user.entity';
 
 @Injectable()
-@EntityRepository()
 export class UserRepository {
   constructor(
     @InjectRepository(UserEntity)
@@ -14,6 +13,7 @@ export class UserRepository {
 
   async create(input: DeepPartial<UserEntity>) {
     const newUser = await this.userRepository.create(input);
+
     return this.userRepository.save(newUser);
   }
 
@@ -25,51 +25,53 @@ export class UserRepository {
     return this.userRepository.findOne({ where: { email } });
   }
 
-  findAll(findUserInput: FindUsersInput): Promise<[UserEntity[], number]> {
-    let queryBuilder = this.userRepository.createQueryBuilder();
-
-    queryBuilder = queryBuilder.where('deletedAt = NULL');
+  async findAll(findUserInput: FindUsersInput): Promise<UserEntity[]> {
+    let queryBuilder = this.userRepository.createQueryBuilder('users');
 
     queryBuilder = ((qb) => {
-      if (findUserInput.keyword) {
+      if (findUserInput?.keyword) {
+        const userKeywordSearchScope = UserKeywordSearchScope.map(
+          (s) => `"users"."${s}"`,
+        );
+
         return qb.andWhere(
-          `CONCAT_WS(',', ${UserKeywordSearchScope.join(',')}) LIKE '%${
+          `CONCAT_WS(',', ${userKeywordSearchScope.join(',')}) LIKE '%${
             findUserInput.keyword
           }%'`,
         );
       }
 
-      if (findUserInput.ids?.length) {
+      if (findUserInput?.ids?.length) {
         qb = qb.andWhere('id IN (:...ids)', {
           ids: findUserInput.ids,
         });
       }
 
-      if (findUserInput.name) {
+      if (findUserInput?.name) {
         qb = qb.andWhere('name = :name', {
           name: findUserInput.name,
         });
       }
 
-      if (findUserInput.email) {
+      if (findUserInput?.email) {
         qb = qb.andWhere('email = :email', {
           email: findUserInput.email,
         });
       }
 
-      if (findUserInput.mobile) {
+      if (findUserInput?.mobile) {
         qb = qb.andWhere('mobile = :mobile', {
           mobile: findUserInput.mobile,
         });
       }
 
-      if (findUserInput.from) {
+      if (findUserInput?.from) {
         qb = qb.andWhere('createdAt >= :from', {
           from: findUserInput.from,
         });
       }
 
-      if (findUserInput.to) {
+      if (findUserInput?.to) {
         qb = qb.andWhere('createdAt <= :to', {
           to: findUserInput.to,
         });
@@ -78,6 +80,6 @@ export class UserRepository {
       return qb;
     })(queryBuilder);
 
-    return queryBuilder.orderBy('createdAt', 'DESC').getManyAndCount();
+    return queryBuilder.orderBy('users.createdAt', 'DESC').getMany();
   }
 }

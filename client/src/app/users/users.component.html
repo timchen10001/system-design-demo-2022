@@ -1,0 +1,14 @@
+<p>users works!</p>
+<button (click)="queryUsers()">
+  get all users!
+</button>
+
+<ul *ngIf="!loading">
+  <li *ngFor="let user of users">
+    {{ user.name }}
+  </li>
+</ul>
+
+<div *ngIf="loading">
+  資料載入中
+</div>
