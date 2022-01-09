@@ -1,0 +1,10 @@
+overwrite: true
+watch: true
+schema: "../server/schema/app.gql"
+documents: "src/graphql/**/*.graphql"
+generates:
+  src/generated/graphql.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-apollo-angular"

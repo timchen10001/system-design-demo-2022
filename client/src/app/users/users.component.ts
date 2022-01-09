@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Apollo, gql } from 'apollo-angular';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { User, UserResult } from 'src/generated/graphql';
+import { UsersService } from './users.service';
 
 @Component({
   selector: 'app-users',
@@ -9,34 +11,35 @@ import { Observable } from 'rxjs';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-  usersObservable: Observable<ApolloQueryResult<unknown>> | undefined;
   loading: boolean = false;
   error: any;
-  users: any;
+  users: User[] = [];
 
-  constructor(private apollo: Apollo) {}
+  constructor(private usersService: UsersService) {}
 
   ngOnInit(): void {
-    this.usersObservable = this.apollo.query({
-      query: gql`
-        {
-          users {
-            users {
-              id
-              name
-              mobile
-            }
-          }
-        }
-      `,
-    })
   }
 
-  getUsers() {
-    this.usersObservable
-      ?.subscribe((result) => {
-        console.log({ result });
-      });
+  queryUsers() {
+    this.loading = true;
+
+    this.usersService.usersObservable
+      ?.subscribe({
+        next: (query) => {
+          console.log({ query });
+
+          if (query.data?.users?.users) {
+            this.users = query.data.users.users as User[];
+          }
+
+          if (query?.errors?.length) {
+            this.error = query.errors;
+          }
+
+          this.loading = query.loading;
+        },
+        error: (error) => this.error = error,
+      })
   }
 
 }
