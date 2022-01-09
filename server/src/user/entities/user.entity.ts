@@ -3,31 +3,31 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  Index,
   PrimaryColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity('users')
 export class UserEntity {
-  @PrimaryColumn({ type: 'char', length: 12 })
+  @PrimaryColumn({ type: 'varchar', length: 12 })
   id: string;
 
-  @Column({ type: 'char', length: 50, unique: true })
-  @Index({ unique: true })
+  @Column({ type: 'varchar', length: 50, unique: true })
   email: string;
 
   @Column({ type: 'text' })
   password: string;
 
-  @Column({ type: 'char', length: 50, nullable: true })
-  @Index()
+  @Column({ type: 'varchar', length: 50, nullable: true })
   name: string;
 
-  @Column({ type: 'char', length: 20, nullable: true })
-  @Index()
+  @Column({ type: 'varchar', length: 20, nullable: true })
   mobile: string;
 
   @CreateDateColumn({ type: 'timestamp' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
 
   @DeleteDateColumn({ type: 'timestamp', nullable: true })

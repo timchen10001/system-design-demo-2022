@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
 import { CreateUserInput } from './dto/create-user.input';
 import { UserEntity } from './entities/user.entity';
 import { UserRepository } from './user.repository';
@@ -7,6 +6,7 @@ import { InvalidInputException } from '../error';
 import { ErrorCode } from '../error/enum/error-code.enum';
 import { UserUtil } from './utils/user.util';
 import { AuthService } from '../auth/auth.service';
+import { FindUsersInput } from './dto/get-user-input';
 
 @Injectable()
 export class UserService {
@@ -36,5 +36,13 @@ export class UserService {
     createUserInput.password = await this.authService.hashPassword(password);
 
     return this.userRepository.create({ id, ...createUserInput });
+  }
+
+  findById(id: string) {
+    return this.userRepository.findOne(id);
+  }
+
+  async findAllUsers(input: FindUsersInput) {
+    return this.userRepository.findAll(input);
   }
 }

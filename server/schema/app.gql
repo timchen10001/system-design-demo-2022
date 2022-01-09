@@ -27,7 +27,22 @@ type UserResult {
 }
 
 type Query {
-  users: UserResult!
+  users(
+    ids: [ID!]
+    name: String
+    email: String
+    mobile: String
+
+    """createdAt from ?"""
+    from: String
+
+    """createdAt to ?"""
+    to: String
+
+    """Scope: `id`, `name`, `email`, `mobile`, `createdAt`"""
+    keyword: String
+  ): UserResult!
+  user(id: String!): User!
 }
 
 type Mutation {

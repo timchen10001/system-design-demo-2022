@@ -19,16 +19,17 @@ import { AuthModule } from './auth/auth.module';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (config: ConfigService): TypeOrmModuleOptions => ({
+      useFactory: (config: ConfigService) => ({
         type: 'postgres',
         host: config.get('TYPEORM_HOST') || 'localhost',
         port: 5432,
-        logger: 'debug',
+        logging: true,
         username: config.get('TYPEORM_USERNAME'),
         password: config.get('TYPEORM_PASSWORD'),
         database: config.get('TYPEORM_DATABASE') || 'demo01',
         entities: [config.get('TYPEORM_ENTITIES')],
         autoLoadEntities: true,
+        debug: config.get('TYPEORM_DEBUG') === 'true',
         synchronize:
           config.get('TYPEORM_SYNCHRONIZE', false) === 'yes' || false,
         migrations: [config.get('TYPEORM_MIGRATIONS')],
