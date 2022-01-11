@@ -36,3 +36,12 @@ export class InvalidInputException extends GeneralException {
     super('INVALID_INPUT_ERROR', error, httpStatus);
   }
 }
+
+export class UnauthorizedException extends GeneralException {
+  constructor(
+    error?: any,
+    httpStatus: ErrorCode = ErrorCode.UNAUTHORIZED_DEFAULT,
+  ) {
+    super('UNAUTHORIZED_ERROR', error, httpStatus);
+  }
+}
