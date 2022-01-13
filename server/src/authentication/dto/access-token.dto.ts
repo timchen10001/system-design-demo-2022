@@ -1,9 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class JWTToken {
-  @ApiProperty()
-  accessToken: string;
-
+export class AccessTokenInput {
   @ApiProperty()
   refreshToken: string;
 }

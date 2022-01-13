@@ -14,7 +14,7 @@ export class AuthenticationService {
     private authService: AuthService,
   ) {}
 
-  async login(input: LoginInput, role: Role): Promise<JWTToken> {
+  async loginUser(input: LoginInput): Promise<JWTToken> {
     const { email, password } = input;
 
     const user = await this.userRepository.findByEmail(email);
@@ -28,7 +28,7 @@ export class AuthenticationService {
 
     return this.authService.generateTokens({
       id: user.id,
-      roles: [role],
+      roles: [Role.User],
     });
   }
 }

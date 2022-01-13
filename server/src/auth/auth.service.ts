@@ -71,4 +71,20 @@ export class AuthService {
   ): Promise<boolean> {
     return await bcrypt.compare(passwordPlainText, passwordHashed);
   }
+
+  parseToken(token: string) {
+    try {
+      return this.jwtService.verify(token);
+    } catch (err) {
+      throw new UnauthorizedException(
+        'Invalid Token',
+        ErrorCode.UNAUTHORIZED_INVALID_TOKEN,
+      );
+    }
+  }
+
+  refreshTokens(refreshTokens: string) {
+    const payload = this.parseToken(refreshTokens);
+    return this.generateTokens(payload);
+  }
 }
