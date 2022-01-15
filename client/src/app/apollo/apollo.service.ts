@@ -6,7 +6,6 @@ import { setContext } from '@apollo/client/link/context';
 import { HttpLink } from "apollo-angular/http";
 
 import authenticator, { Authenticator } from '../auth/authenticator.service';
-import refreshToken from './utils/refresh-token';
 import { Role } from './role';
 import { TokenName } from "../auth/typings/token.interface";
 
