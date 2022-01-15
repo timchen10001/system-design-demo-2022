@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server:start": "cd server && yarn start",
+    "server:start": "cd server && yarn start --watch",
     "client:start": "cd client && yarn start"
   },
   "keywords": [],

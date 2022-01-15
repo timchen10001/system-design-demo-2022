@@ -26,6 +26,33 @@ type UserResult {
   users: [User!]!
 }
 
+type MeResult {
+  """unique id."""
+  id: ID!
+
+  """sign up email."""
+  email: String!
+
+  """user name."""
+  name: String!
+  mobile: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  role: Role!
+}
+
+enum Role {
+  User
+  Public
+  Admin
+}
+
+type JWTToken {
+  accessToken: String!
+  refreshToken: String!
+}
+
 type Query {
   users(
     ids: [ID!]
@@ -42,7 +69,9 @@ type Query {
     """Scope: `id`, `name`, `email`, `mobile`, `createdAt`"""
     keyword: String
   ): UserResult!
-  user(id: String!): User!
+  user(id: ID!): User!
+  me: MeResult
+  token: JWTToken!
 }
 
 type Mutation {

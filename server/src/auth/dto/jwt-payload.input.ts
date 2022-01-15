@@ -1,6 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { JwtTokenType } from '../enum/jwt-token-type.enum';
-import { Role } from './role.enum';
+import { Role } from '../enum/role.enum';
 
 @ObjectType()
 export class JwtPayloadInput {

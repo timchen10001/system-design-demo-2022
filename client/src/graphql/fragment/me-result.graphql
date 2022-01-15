@@ -1,0 +1,7 @@
+fragment MeResult on MeResult {
+  id
+  name
+  email
+  mobile
+  role
+}
