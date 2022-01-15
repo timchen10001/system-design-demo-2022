@@ -43,6 +43,7 @@ type Query {
     keyword: String
   ): UserResult!
   user(id: String!): User!
+  me: User!
 }
 
 type Mutation {
