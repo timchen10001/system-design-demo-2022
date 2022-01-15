@@ -10,7 +10,7 @@ import { ErrorCode } from '../error/enum/error-code.enum';
 import { UnauthorizedException } from '../error';
 import { AuthService } from './auth.service';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { Role } from './dto/role.enum';
+import { Role } from './enum/role.enum';
 import { ROLES_KEY } from './decorator/role.decorator';
 import { JwtTokenType } from './enum/jwt-token-type.enum';
 

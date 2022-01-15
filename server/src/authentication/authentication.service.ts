@@ -5,7 +5,7 @@ import { LoginInput } from './dto/login.input';
 import { JWTToken } from '../auth/dto/jwt-token.dto';
 import { UnauthorizedException } from '../error';
 import { ErrorCode } from '../error/enum/error-code.enum';
-import { Role } from '../auth/dto/role.enum';
+import { Role } from '../auth/enum/role.enum';
 
 @Injectable()
 export class AuthenticationService {
