@@ -1,41 +1,42 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpLink } from 'apollo-angular/http';
 import { APOLLO_OPTIONS } from 'apollo-angular';
-import { InMemoryCache, ApolloClientOptions, NormalizedCacheObject } from '@apollo/client/core';
-import { HttpBatchLink } from 'apollo-angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UsersComponent } from './users/users.component';
 import { UsersService } from './users/users.service';
 import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
+import { UserService } from './user/user.service';
+import { UserComponent } from './user/user.component';
+import { ApolloService } from './apollo/apollo.service';
+import { Authenticator as AuthenticatorService } from './auth/authenticator.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [
+    AuthenticatorService,
     {
       provide: APOLLO_OPTIONS,
-      deps: [HttpBatchLink],
-      useFactory: (httpLink: HttpBatchLink): ApolloClientOptions<NormalizedCacheObject> => ({
-        cache: new InMemoryCache(),
-        link: httpLink.create({
-          uri: 'http://localhost:3000/graphql',
-          batchMax: 5,
-          batchInterval: 20,
-        }),
-      }),
+      useFactory: ApolloService.Link('http://localhost:3000'),
+      deps: [HttpLink],
     },
     UsersService,
+    UserService,
   ],
   bootstrap: [AppComponent]
 })

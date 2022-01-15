@@ -1,11 +1,14 @@
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { EventEmitter } from 'eventemitter3';
 import { GraphQLError } from 'graphql';
-import { TokenName } from '../typings/token.interface';
-import { ErrorCode } from '../enum/error-code';
-import { getToken } from '../utils/storage';
 
-class Authenticator extends EventEmitter {
+import { TokenName, Tokens } from './typings/token.interface';
+import { ErrorCode } from './enum/error-code';
+import { JwtToken } from '../../generated/graphql';
+
+@Injectable({ providedIn: 'root' })
+export class Authenticator extends EventEmitter {
   static Events = {
     TOKEN_EXPIRED: 'E/TOKEN_EXPIRED',
     TOKEN_UPDATED: 'E/TOKEN_UPDATED',
@@ -133,6 +136,44 @@ class Authenticator extends EventEmitter {
     return this._tokenUpdatedObservable;
   }
 
+  static refreshToken (
+    host: string,
+    jwtToken: Pick<JwtToken, 'accessToken' | 'refreshToken'>,
+    headers: any
+  ) {
+    return fetch(`${host}/accessToken`, {
+      method: 'POST',
+      body: JSON.stringify({
+        refreshToken: jwtToken.refreshToken
+      }),
+      headers: {
+        ...headers,
+        ...jwtToken.accessToken ? {
+          Authorization: `Bearer ${jwtToken.accessToken}`,
+        } : {},
+        'Content-Type': 'application/json',
+      },
+    }).then((response) => response.json()) as Promise<JwtToken>
+  }
+
+  static getToken (tokenName: TokenName): string {
+    return localStorage.getItem(tokenName) || '';
+  }
+
+  static setTokens = (tokens: Tokens): void => {
+    localStorage.setItem(TokenName.ACCESS_TOKEN, tokens.accessToken);
+    localStorage.setItem(TokenName.REFRESH_TOKEN, tokens.refreshToken);
+  };
+
+  static setToken (tokenName: TokenName, token: string): void {
+    localStorage.setItem(tokenName, token);
+  };
+
+  static removeTokens (): void {
+    localStorage.removeItem(TokenName.ACCESS_TOKEN);
+    localStorage.removeItem(TokenName.REFRESH_TOKEN);
+  };
+
   get tokenExpired() {
     return [
       ErrorCode.UNAUTHORIZED_DEFAULT,
@@ -141,12 +182,11 @@ class Authenticator extends EventEmitter {
     ].some((err) => !!this._errorStatusCodeSet.has(String(err)));
   }
 
-  // eslint-disable-next-line class-methods-use-this
   get accessToken() {
-    return getToken(TokenName.ACCESS_TOKEN);
+    return Authenticator.getToken(TokenName.ACCESS_TOKEN);
   }
 }
 
-const authenticator = new Authenticator();
+const authentocator = new Authenticator();
 
-export default authenticator;
+export default authentocator;
