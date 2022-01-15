@@ -1,0 +1,7 @@
+#import "../fragment/me-result.graphql"
+
+query Me {
+  me {
+    ...MeResult
+  }
+}
