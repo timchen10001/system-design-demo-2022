@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpLink } from 'apollo-angular/http';
 import { APOLLO_OPTIONS } from 'apollo-angular';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +15,7 @@ import { UserService } from './user/user.service';
 import { UserComponent } from './user/user.component';
 import { ApolloService } from './apollo/apollo.service';
 import { Authenticator as AuthenticatorService } from './auth/authenticator.service';
+import { httpInterceptorProviders } from './http';
 
 @NgModule({
   declarations: [
@@ -21,14 +23,16 @@ import { Authenticator as AuthenticatorService } from './auth/authenticator.serv
     UsersComponent,
     LoginComponent,
     HomeComponent,
-    UserComponent
+    UserComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    ReactiveFormsModule,
   ],
   providers: [
+    httpInterceptorProviders,
     AuthenticatorService,
     {
       provide: APOLLO_OPTIONS,
