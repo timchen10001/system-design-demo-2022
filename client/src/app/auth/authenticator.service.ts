@@ -1,14 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
-import { EventEmitter } from 'eventemitter3';
+import jwtDecode from 'jwt-decode';
+import { EventEmitter as EventEmitter3 } from 'eventemitter3';
 import { GraphQLError } from 'graphql';
 
 import { TokenName, Tokens } from './typings/token.interface';
 import { ErrorCode } from './enum/error-code';
 import { JwtToken } from '../../generated/graphql';
+import { Role } from './typings/role.interface';
 
 @Injectable({ providedIn: 'root' })
-export class Authenticator extends EventEmitter {
+export class Authenticator extends EventEmitter3 {
+  @Output() logined = new EventEmitter<Tokens | undefined>();
+
   static Events = {
     TOKEN_EXPIRED: 'E/TOKEN_EXPIRED',
     TOKEN_UPDATED: 'E/TOKEN_UPDATED',
@@ -160,6 +164,16 @@ export class Authenticator extends EventEmitter {
     return localStorage.getItem(tokenName) || '';
   }
 
+  getTokens() {
+    const accessToken = Authenticator.getToken(TokenName.ACCESS_TOKEN);
+    const refreshToken = Authenticator.getToken(TokenName.REFRESH_TOKEN);
+
+    return accessToken && refreshToken ? {
+      accessToken,
+      refreshToken
+    } : undefined;
+  }
+
   static setTokens = (tokens: Tokens): void => {
     localStorage.setItem(TokenName.ACCESS_TOKEN, tokens.accessToken);
     localStorage.setItem(TokenName.REFRESH_TOKEN, tokens.refreshToken);
@@ -174,19 +188,25 @@ export class Authenticator extends EventEmitter {
     localStorage.removeItem(TokenName.REFRESH_TOKEN);
   };
 
-  get tokenExpired() {
-    return [
-      ErrorCode.UNAUTHORIZED_DEFAULT,
-      ErrorCode.UNAUTHORIZED_EXPIRED_TOKEN,
-      ErrorCode.UNAUTHORIZED_INVALID_TOKEN,
-    ].some((err) => !!this._errorStatusCodeSet.has(String(err)));
+  updateTokens(tokens: Tokens) {
+    Authenticator.setTokens(tokens);
+
+    this.logined.emit(tokens);
+
+    return this.getTokens();
   }
 
   get accessToken() {
-    return Authenticator.getToken(TokenName.ACCESS_TOKEN);
+    return this.getTokens()?.accessToken;
+  }
+
+  get authorized() {
+    return !!this.accessToken;
+  }
+
+  get roleInfo() {
+    if (!this.accessToken) return undefined;
+
+    return jwtDecode<Role | undefined>(this.accessToken);
   }
 }
-
-const authentocator = new Authenticator();
-
-export default authentocator;

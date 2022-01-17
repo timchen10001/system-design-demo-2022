@@ -5,9 +5,9 @@ import { onError } from '@apollo/client/link/error';
 import { setContext } from '@apollo/client/link/context';
 import { HttpLink } from "apollo-angular/http";
 
-import authenticator, { Authenticator } from '../auth/authenticator.service';
-import { Role } from './role';
+import { Authenticator } from '../auth/authenticator.service';
 import { TokenName } from "../auth/typings/token.interface";
+import { Role } from "../auth/typings/role.interface";
 
 /**
  * @ref https://apollo-angular.com/docs/recipes/authentication/
@@ -43,6 +43,8 @@ export class ApolloService {
             },
             headers,
           );
+
+          console.log({ tokenRefreshResponse });
     
           if (tokenRefreshResponse?.accessToken) {
             accessToken = tokenRefreshResponse.accessToken;
@@ -73,8 +75,7 @@ export class ApolloService {
             locations,
             path,
           } = graphQLError;
-    
-          authenticator.registerError(graphQLError);
+  
           console.error(`[GraphQL error]: Code: ${code}, Message: ${message}, Location: ${locations}, Path: ${path}`);
         });
       }
