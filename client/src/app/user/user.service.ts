@@ -1,28 +1,37 @@
 import { Injectable } from '@angular/core';
-import { ApolloQueryResult } from '@apollo/client/core';
-import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
+import { Apollo } from 'apollo-angular';
+import { HttpClient } from '@angular/common/http';
+import { ApolloQueryResult } from '@apollo/client/core';
 import { User, MeDocument, QueryUserArgs, UserDocument } from '../../generated/graphql';
+import { LoginUserInput } from './typings/login-user.input';
 
 @Injectable()
 export class UserService {
-  meObservable$: Observable<ApolloQueryResult<User>> | undefined;
-  private userObservable$: Observable<ApolloQueryResult<User>> | undefined;
+  constructor(
+    private apollo: Apollo,
+    private http: HttpClient,
+  ) {}
 
-  constructor(private apollo: Apollo) {
-    this.meObservable$ = this.apollo.query({
+  getMeObservable():Observable<ApolloQueryResult<User>> {
+    return this.apollo.query({
       query: MeDocument,
       fetchPolicy: 'network-only',
     });
   }
 
-  getUserObservable(variables: QueryUserArgs) {
-    this.userObservable$ = this.apollo.query({
+  getUserObservable(variables: QueryUserArgs): Observable<ApolloQueryResult<User>> {
+    return this.apollo.query({
       query: UserDocument,
       variables,
       fetchPolicy: 'network-only',
     })
+  }
 
-    return this.userObservable$;
+  getLoginUserObservable(loginUserArgs: LoginUserInput) {
+    return this.http.post('http://localhost:3000/login/user', {
+      email: loginUserArgs.email,
+      password: loginUserArgs.password,
+    });
   }
 }
