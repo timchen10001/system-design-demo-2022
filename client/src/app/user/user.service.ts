@@ -3,8 +3,10 @@ import { Observable } from 'rxjs';
 import { Apollo } from 'apollo-angular';
 import { HttpClient } from '@angular/common/http';
 import { ApolloQueryResult } from '@apollo/client/core';
+
 import { User, MeDocument, QueryUserArgs, UserDocument } from '../../generated/graphql';
 import { LoginUserInput } from './typings/login-user.input';
+import { AppGlobals } from '../app-globals.service';
 
 @Injectable()
 export class UserService {
@@ -29,7 +31,7 @@ export class UserService {
   }
 
   getLoginUserObservable(loginUserArgs: LoginUserInput) {
-    return this.http.post('http://localhost:3000/login/user', {
+    return this.http.post(`${AppGlobals.serverHost}/login/user`, {
       email: loginUserArgs.email,
       password: loginUserArgs.password,
     });

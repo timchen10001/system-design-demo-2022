@@ -28,15 +28,11 @@ export class ApolloService {
       const { headers } = context;
   
       let accessToken = Authenticator.getToken(TokenName.ACCESS_TOKEN);
-
-      console.log({ accessToken });
     
       if (accessToken) {
         const roleInfo = jwtDecode<Role>(accessToken);
         const now = Date.now() / 1000;
         const tokenExpired = roleInfo.exp < now;
-
-        console.log({ roleInfo });
     
         if (tokenExpired) {
           const tokenRefreshResponse = await Authenticator.refreshToken(
@@ -79,8 +75,7 @@ export class ApolloService {
             locations,
             path,
           } = graphQLError;
-    
-          // authenticator.registerError(graphQLError);
+  
           console.error(`[GraphQL error]: Code: ${code}, Message: ${message}, Location: ${locations}, Path: ${path}`);
         });
       }

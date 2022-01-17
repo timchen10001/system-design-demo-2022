@@ -15,7 +15,7 @@ export class UnAuthorizedGuard implements CanActivate {
       this.auth.authorized
       && this.router.routerState.snapshot.url.match(/\/login/)
     ) {
-      this.router.navigate(['']);
+      this.router.navigate(['/']);
 
       return false;
     }
