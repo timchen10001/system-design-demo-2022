@@ -1,4 +1,4 @@
-import { Body, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UserRepository } from '../user/user.repository';
 import { AuthService } from '../auth/auth.service';
 import { LoginInput } from './dto/login.input';
