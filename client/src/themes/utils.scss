@@ -1,0 +1,19 @@
+@use 'sass:map';
+
+@function list-includes($list, $item) {
+  @each $i in $list {
+    @if $i == $item {
+      @return true;
+    }
+  }
+
+  @return false;
+}
+
+@function map-get-deep($map, $keys...) {
+  @each $key in $keys {
+    $map: map.get($map, $key);
+  }
+
+  @return $map;
+}

@@ -1,13 +1,33 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <label for="email">Email</label>
-    <input id="email" type="text" formControlName="email" required>
+<div class="root">
+  <main class="container">
+    <div class="logo"></div>
 
-    <label for="password">Password</label>
-    <input id="password" type="password" formControlName="password" required>
+    <div class="label">Sign In with</div>
+    <div class="social">
+      <a class="social-item">A</a>
+      <a class="social-item">B</a>
+      <a class="social-item">C</a>
+      <a class="social-item">D</a>
+      <a class="social-item">E</a>
+    </div>
 
-    <button
-      type="submit"
-      [disabled]="!loginForm.valid">
-        Submit
-    </button>
-</form>
+    <div class="content-break">
+      <div class="label">or with Imgur</div>
+
+      <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <label for="email">Email</label>
+        <input id="email" type="text" formControlName="email" required />
+
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          required
+        />
+
+        <button type="submit" [disabled]="!loginForm.valid">Submit</button>
+      </form>
+    </div>
+  </main>
+</div>

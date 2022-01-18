@@ -1,0 +1,51 @@
+@use "sass:list";
+@use "sass:map";
+
+$offset: 1;
+
+$small-mobile: 481;
+$mobile: 768;
+$tablet-pro: 1024;
+$tablet: 992;
+$desktop: 1280;
+
+$desktop-height: 635;
+
+$breakpoints: (
+  below-small-mobile: (
+    max-width: #{$small-mobile - $offset}px,
+  ),
+  below-mobile: (
+    max-width: #{$mobile - $offset}px,
+  ),
+  below-tablet-pro: (
+    max-width: #{$tablet-pro}px,
+  ),
+  below-tablet: (
+    max-width: #{$tablet - $offset}px,
+  ),
+  below-desktop: (
+    max-width: #{$desktop - $offset}px,
+  ),
+  below-desktop-min-altitude: (
+    max-height: #{$desktop-height}px,
+  ),
+);
+
+@mixin query($key) {
+  $target: map.get($breakpoints, $key);
+  $key: map.keys($target);
+  $val: map.values($target);
+
+  @media ($key: $val) {
+    @content;
+  }
+}
+
+:export {
+  offset: $offset;
+  mobile: $mobile;
+  tablet: $tablet;
+  desktop: $desktop;
+  desktop-height: $desktop-height;
+}

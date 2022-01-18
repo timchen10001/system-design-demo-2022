@@ -1,0 +1,113 @@
+@use './utils';
+@use 'sass:map';
+
+/**
+ * @section Main Color Variables
+ */
+ $white: #F5F5F5;
+ $white-1: #FEFEFE;
+
+ $gray-0: #b6b6b6;
+ $gray-1: #9c9b99;
+ $gray-2: #2C2F34;
+ $gray-3: rgb(133, 133, 133);
+ $gray-4: #606163;
+ $gray-5: #D0D2D3;
+ $gray-6: #212121;
+
+ $black-1: #171A21;
+ $black-2: #000000;
+ 
+ $green-1: #A9F8CC;
+ $green-2: #A0E7BD;
+ $green-3: #71D09F;
+ $green-4: #238D24;
+
+ $blue-1: #4F76FF;
+ $blue-2: #4A70F1;
+ $blue-3: #2196F3;
+ $blue-4: #2B36D4;
+
+ $purple-1: #656dd6;
+
+ $red-1: #EB4545;
+
+ $yellow-1: #fff000;
+ $yellow-2: #f8e917;
+/**
+ * @section background
+ */
+ $base-0: #f5f7fb;
+ $base-1: #F2F5FC;
+ $base-2: #262630;
+ $base-3: #181a21;
+ $base-4: #1C273A;
+
+ $variables: (
+  white: $white,
+  switch:  $blue-3,
+  button: $blue-4,
+  side-bar: $base-3,
+  red: $red-1,
+  black: $black-2,
+  loading: $base-4,
+
+  green: (
+    light: $green-1,
+    dark: $green-3,
+  ),
+
+  blue: (
+    light: $blue-1,
+    dark: $blue-2,
+  ),
+
+  yellow: (
+    default: $yellow-1,
+    dark: $yellow-2,
+  ),
+  gray: (
+    lightest: $gray-5,
+    semi-light: $gray-0,
+    light: $gray-1,
+    default: $gray-2,
+    dark: $gray-4,
+    super: $gray-6,
+  ),
+
+  sorter: $purple-1,
+
+  box-card: (
+    white: $white-1,
+    black: $base-3,
+    blue: $base-0,
+    light-black: $base-2,
+  ),
+  dark-mode: (
+    font: (
+      green: $green-1,
+      blue:  $blue-1,
+    ),
+    pie-chart: (
+      green: $green-2,
+      blue:  $blue-1,
+    ),
+    background-base: $base-2,
+  ),
+
+  light-mode: (
+    font: (
+      green: $green-3,
+      blue:  $blue-1,
+    ),
+    pie-chart: (
+      green: $green-2,
+      blue:  $blue-2,
+    ),
+    background-base: $base-1,
+  ),
+);
+
+@function get($keys...) {
+  @return map.get($variables, $keys...);
+}

@@ -23,7 +23,10 @@
       "es2020",
       "dom",
       "esnext.asynciterable",
-    ]
+    ],
+    "paths": {
+      "@assets/*": ["assets/*"]
+    },
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
