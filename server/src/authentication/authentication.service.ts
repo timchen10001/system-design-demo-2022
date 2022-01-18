@@ -19,7 +19,11 @@ export class AuthenticationService {
 
     const user = await this.userRepository.findByEmail(email);
 
-    if (!user || !this.authService.validatePassword(password, user.password)) {
+    const validRequest = user
+      ? await this.authService.validatePassword(password, user.password)
+      : false;
+
+    if (!validRequest) {
       throw new UnauthorizedException(
         'Failed Login',
         ErrorCode.UNAUTHORIZED_INVALID_CREDENTIAL,
