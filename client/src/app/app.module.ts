@@ -35,12 +35,12 @@ import { AppGlobals } from './app-globals.service';
   providers: [
     AppGlobals,
     httpInterceptorProviders,
-    AuthenticatorService,
     {
       provide: APOLLO_OPTIONS,
-      useFactory: ApolloService.Link(AppGlobals.serverHost),
+      useFactory: ApolloService.from(AppGlobals.serverHost),
       deps: [HttpLink],
     },
+    AuthenticatorService,
     UsersService,
     UserService,
   ],

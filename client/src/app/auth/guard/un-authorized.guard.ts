@@ -11,15 +11,12 @@ export class UnAuthorizedGuard implements CanActivate {
   ) {}
 
   canActivate(): Observable<boolean|UrlTree>|Promise<boolean|UrlTree>|boolean|UrlTree {
-    if (
-      this.auth.authorized
-      && this.router.routerState.snapshot.url.match(/\/login/)
-    ) {
-      this.router.navigate(['/']);
-
-      return false;
+    if (!this.auth.authorized) {
+      return true;
     }
 
-    return !this.auth.authorized;
+    this.router.navigate(['']);
+    
+    return false;
   }
 }

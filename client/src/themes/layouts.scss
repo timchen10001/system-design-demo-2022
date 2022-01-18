@@ -1,0 +1,17 @@
+@use "sass:map";
+
+$shadow: (
+  content1: 1.1px 1.2px 5px 0.15px rgb(0 0 0 / 15%),
+  content2: 0.5px 0.5px 10px 1.5px rgb(0 0 0 / 20%),
+  content3: 1.1px 1.2px 5px 0.15px rgb(0 0 0 / 15%),
+  content4: 1px 1px 10px 1.5px rgb(0 0 0 / 30%),
+  content5: 2px 2px 9px 3px rgb(0 0 0 / 20%),
+);
+
+@mixin shadow($type: white) {
+  box-shadow: map.get($shadow, $type);
+}
+
+@mixin text-shadow {
+  text-shadow: 1px 1px 0 rgb(0 0 0 / 80%);
+}

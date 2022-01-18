@@ -22,12 +22,12 @@ import { UnAuthorizedGuard } from './auth/guard/un-authorized.guard';
     {
       path: 'user',
       component: UserComponent,
-      canActivate: [AuthorizedGuard]
+      canActivate: [AuthorizedGuard],
     },
     {
       path: 'users',
       component: UsersComponent,
-      canActivate: [AuthorizedGuard]
+      canActivate: [AuthorizedGuard],
     },
   ])],
   providers: [AuthorizedGuard, UnAuthorizedGuard],

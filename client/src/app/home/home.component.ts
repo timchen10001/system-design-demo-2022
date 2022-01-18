@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Authenticator } from '../auth/authenticator.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,14 @@ import { Observable } from 'rxjs';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  constructor() { }
+  constructor(
+    private auth: Authenticator,
+  ) { }
 
   ngOnInit(): void {
   }
 
+  logoutUser() {
+    this.auth.removeTokens();
+  }
 }

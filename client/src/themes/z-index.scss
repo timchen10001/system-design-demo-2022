@@ -1,0 +1,10 @@
+@use 'sass:list';
+@use 'sass:map';
+
+$orders: (base, header, content-overlay, popover, select, modal, loading);
+
+$base: 100;
+
+@function get($name) {
+  @return list.index($orders, $name) + $base;
+}

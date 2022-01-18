@@ -17,18 +17,19 @@ export class UserComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
-  ) { }
-
-  ngOnInit(): void {
+  ) {
     this.user$ = this.route.paramMap.pipe(
       switchMap((params) => {
         const userId = params.get('userId')
-
+  
         console.log({ userId });
-
+  
         return this.userService.getUserObservable({ id: userId || '' });
       })
     )
+  }
+
+  ngOnInit(): void {
   }
 
   getUser() {

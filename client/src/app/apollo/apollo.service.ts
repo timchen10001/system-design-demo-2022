@@ -16,7 +16,7 @@ import { Role } from "../auth/typings/role.interface";
  */
 @Injectable()
 export class ApolloService {
-  static Link = (host: string) => function createApolloLink(httpLink: HttpLink) {      
+  static from = (host: string) => function createApolloLink(httpLink: HttpLink) {      
     const http = httpLink.create({ uri: `${host}/graphql` });
   
     const basic = setContext((operation, context) => ({
