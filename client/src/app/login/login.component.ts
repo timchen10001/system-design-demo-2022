@@ -39,12 +39,12 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     const loginArgs: LoginUserInput = this.loginForm.value;
 
-    const loginUser$ = this.userService.getLoginUserObservable(loginArgs);
-
-    loginUser$.subscribe(
-      (loginUserResponse) => {
-        this.auth.updateTokens(loginUserResponse as Tokens);
-      },
-    );
+    this.userService
+      .getLoginUserObservable(loginArgs)
+      .subscribe(
+        (loginUserResponse) => {
+          this.auth.updateTokens(loginUserResponse as Tokens);
+        },
+      );
   }
 }

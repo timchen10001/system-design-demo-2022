@@ -16,7 +16,7 @@ export class HttpSetTokenInterceptor implements HttpInterceptor {
 
     if (!token) return next.handle(req);
 
-    const headers = req.headers.set('Autorization', `Bearer ${token}`);
+    const headers = req.headers.set('Authorization', `Bearer ${token}`);
 
     const authReq = req.clone({ headers });
 
