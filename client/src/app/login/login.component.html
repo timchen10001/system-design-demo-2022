@@ -15,18 +15,36 @@
       <div class="label">or with Imgur</div>
 
       <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <label for="email">Email</label>
-        <input id="email" type="text" formControlName="email" required />
-
-        <label for="password">Password</label>
         <input
-          id="password"
-          type="password"
-          formControlName="password"
           required
-        />
+          id="email"
+          type="text"
+          formControlName="email"
+          [ngClass]="{ dirty: !!loginForm.value?.email }"
+          class="input"
+          placeholder="Email"
+          autocomplete="off" />
 
-        <button type="submit" [disabled]="!loginForm.valid">Submit</button>
+        <p class="password">
+          <input
+            required
+            id="password"
+            type="password"
+            formControlName="password"
+            [ngClass]="{ dirty: !!loginForm.value?.password }"
+            class="input"
+            placeholder="Password"
+            autocomplete="off" />
+          
+            <a class="forget-button">forgot?</a>
+        </p>
+
+        <button
+          type="submit"
+          class="submit"
+          [disabled]="!loginForm.valid">
+          Sign in
+        </button>
       </form>
     </div>
   </main>

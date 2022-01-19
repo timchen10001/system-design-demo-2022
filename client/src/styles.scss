@@ -91,3 +91,8 @@ img::before {
   -webkit-user-drag: none;
   -webkit-app-region: no-drag;
 }
+
+p {
+  margin-block: 0;
+  margin-inline: 0;
+}

@@ -17,6 +17,7 @@ import { ApolloService } from './apollo/apollo.service';
 import { Authenticator as AuthenticatorService } from './auth/authenticator.service';
 import { httpInterceptorProviders } from './http';
 import { AppGlobals } from './app-globals.service';
+import { MessageService } from './message/message.service';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { AppGlobals } from './app-globals.service';
   ],
   providers: [
     AppGlobals,
+    MessageService,
     httpInterceptorProviders,
     {
       provide: APOLLO_OPTIONS,
