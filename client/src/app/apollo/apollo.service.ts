@@ -98,7 +98,7 @@ export class ApolloService {
     // });
   
     return {
-      link: ApolloLink.from([basic, auth, error, http]),
+      link: ApolloLink.from([basic, error, auth, http]),
       cache: new InMemoryCache(),
     };
   }

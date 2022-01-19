@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+
 import { Authenticator } from '../auth/authenticator.service';
 import { Tokens } from '../auth/typings/token.interface';
 import { LoginUserInput } from '../user/typings/login-user.input';
@@ -20,8 +20,6 @@ export class LoginComponent implements OnInit {
 
   logined = this.auth.authorized;
 
-  loginUser$!: Observable<Object>;
-
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
@@ -30,7 +28,9 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.auth.logined.asObservable().subscribe((logined) => {
+    this.auth.logined
+      .asObservable()
+      .subscribe((logined) => {
       this.logined = !!logined;
 
       if (this.logined) {
