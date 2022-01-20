@@ -7,7 +7,7 @@ export class MessageService {
   constructor() { }
 
   add(message: string, type: 'default' | 'error' | 'verbose') {
-    const trigger = (() => {
+  const logger = (() => {
       switch (type) {
         case 'verbose':
           return console.debug;
@@ -19,6 +19,6 @@ export class MessageService {
       }
     })();
 
-    trigger(message);
+    logger(message);
   }
 }

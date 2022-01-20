@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class Authenticator {
-  @Output() logined = new EventEmitter<Tokens | undefined>();
+  @Output()
+  logined = new EventEmitter<Tokens | undefined>();
 
   constructor(private router: Router) {
     this.logined

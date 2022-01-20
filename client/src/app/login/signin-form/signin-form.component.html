@@ -1,0 +1,42 @@
+<form class="form" [formGroup]="signinForm" (ngSubmit)="onSubmit()">
+  <input
+    required
+    id="email"
+    type="text"
+    formControlName="email"
+    [ngClass]="{ dirty: !!signinForm.value?.email }"
+    class="input"
+    placeholder="Email"
+    autocomplete="off"
+  />
+
+  <p class="password">
+    <input
+      required
+      id="password"
+      type="password"
+      formControlName="password"
+      [ngClass]="{ dirty: !!signinForm.value?.password }"
+      class="input"
+      placeholder="Password"
+      autocomplete="off"
+    />
+
+    <a class="forget-button">forgot?</a>
+  </p>
+
+  <div class="button-group">
+    <button
+      type="button"
+      class="link"
+      routerLink="/login/register"
+      (click)="onFormTypeChange('register')"
+    >
+      need an account?
+    </button>
+
+    <button type="submit" class="submit" [disabled]="!signinForm.valid">
+      Sign in
+    </button>
+  </div>
+</form>

@@ -18,6 +18,8 @@ import { Authenticator as AuthenticatorService } from './auth/authenticator.serv
 import { httpInterceptorProviders } from './http';
 import { AppGlobals } from './app-globals.service';
 import { MessageService } from './message/message.service';
+import { RegisterFormComponent } from './login/register-form/register-form.component';
+import { SigninFormComponent } from './login/signin-form/signin-form.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { MessageService } from './message/message.service';
     LoginComponent,
     HomeComponent,
     UserComponent,
+    RegisterFormComponent,
+    SigninFormComponent,
   ],
   imports: [
     BrowserModule,

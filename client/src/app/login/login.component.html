@@ -14,38 +14,14 @@
     <div class="content-break">
       <div class="label">or with Imgur</div>
 
-      <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <input
-          required
-          id="email"
-          type="text"
-          formControlName="email"
-          [ngClass]="{ dirty: !!loginForm.value?.email }"
-          class="input"
-          placeholder="Email"
-          autocomplete="off" />
+      <register-form
+        *ngIf="formType === 'register'"
+        (changedFormType)="onFormTypeChange($event)"></register-form>
 
-        <p class="password">
-          <input
-            required
-            id="password"
-            type="password"
-            formControlName="password"
-            [ngClass]="{ dirty: !!loginForm.value?.password }"
-            class="input"
-            placeholder="Password"
-            autocomplete="off" />
-          
-            <a class="forget-button">forgot?</a>
-        </p>
+      <signin-form
+        *ngIf="formType === 'signin'"
+        (changedFormType)="onFormTypeChange($event)"></signin-form>
 
-        <button
-          type="submit"
-          class="submit"
-          [disabled]="!loginForm.valid">
-          Sign in
-        </button>
-      </form>
     </div>
   </main>
 </div>

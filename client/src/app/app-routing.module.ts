@@ -29,6 +29,10 @@ import { UnAuthorizedGuard } from './auth/guard/un-authorized.guard';
       component: UsersComponent,
       canActivate: [AuthorizedGuard],
     },
+    {
+      path: '**',
+      redirectTo: '',
+    },
   ])],
   providers: [AuthorizedGuard, UnAuthorizedGuard],
   exports: [RouterModule]
