@@ -116,14 +116,12 @@
 
 .submit {
   @include typography.size(content14);
-  position: absolute;
-  bottom: -50px;
-  right: 0;
+  @include typography.weight(semi-bold);
   color: white;
 
   background-color: #5c69ff;
   border-radius: 2px;
-  padding: 10px 25px;
+  padding: 10px 20px;
   opacity: 1;
   transition: opacity 0.2s ease-in;
 
@@ -134,4 +132,23 @@
 
 .dirty {
   color: white;
+}
+
+.link {
+  @include typography.size(content14);
+  @include typography.weight(medium);
+  color: white;
+}
+
+.button-group {
+  position: absolute;
+  bottom: -50px;
+  right: 0;
+
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  align-items: center;
+
+  column-gap: 12px;
 }

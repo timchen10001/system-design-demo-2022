@@ -6,11 +6,12 @@ import { Authenticator } from '../auth/authenticator.service';
 import { Tokens } from '../auth/typings/token.interface';
 import { LoginUserInput } from '../user/typings/login-user.input';
 import { UserService } from '../user/user.service';
+import { FormTypes } from './typings/form-type';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   loginForm = this.fb.group({
@@ -20,9 +21,10 @@ export class LoginComponent implements OnInit {
 
   logined = this.auth.authorized;
 
+  formType: FormTypes = 'signin';
+
   constructor(
     private fb: FormBuilder,
-    private userService: UserService,
     private auth: Authenticator,
     private router: Router,
   ) { }
@@ -39,15 +41,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    const loginArgs: LoginUserInput = this.loginForm.value;
-
-    this.userService
-      .getLoginUserObservable(loginArgs)
-      .subscribe(
-        (loginUserResponse) => {
-          this.auth.updateTokens(loginUserResponse as Tokens);
-        },
-      );
+  onFormTypeChange(type: FormTypes) {
+    this.formType = type;
   }
 }
