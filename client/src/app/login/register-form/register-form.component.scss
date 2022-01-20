@@ -1,0 +1,74 @@
+@use "../../../themes/palette.scss" as palette;
+@use "../../../themes/layouts.scss" as layouts;
+@use "../../../themes/typography.scss" as typography;
+
+.form {
+  position: relative;
+
+  @include layouts.shadow(content5);
+  padding: 15px;
+  background: palette.get(gray, default);
+  border-radius: 5px;
+
+  display: grid;
+  grid-template-rows: repeat(2, max-content);
+  row-gap: 10px;
+}
+
+.input {
+  background-color: #191919;
+  border-radius: 5px;
+  height: 32px;
+  padding: 0 10px;
+
+  color: gray;
+  border: 1px solid transparent;
+
+  &[type="password"] {
+    border-radius: 5px 0 0 5px;
+  }
+
+  &:focus {
+    color: white;
+    border-color: #1bb76e;
+  }
+}
+
+.submit {
+  @include typography.size(content14);
+  @include typography.weight(semi-bold);
+  color: white;
+
+  background-color: #5c69ff;
+  border-radius: 2px;
+  padding: 10px 20px;
+  opacity: 1;
+  transition: opacity 0.2s ease-in;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.dirty {
+  color: white;
+}
+
+.link {
+  @include typography.size(content14);
+  @include typography.weight(medium);
+  color: white;
+}
+
+.button-group {
+  position: absolute;
+  bottom: -50px;
+  right: 0;
+
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  align-items: center;
+
+  column-gap: 12px;
+}

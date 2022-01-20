@@ -1,0 +1,63 @@
+<form class="form" [formGroup]="reigsterForm" (ngSubmit)="onSubmit()">
+  <input
+    required
+    id="username"
+    type="text"
+    formControlName="username"
+    [ngClass]="{ dirty: !!reigsterForm.value?.username }"
+    class="input"
+    placeholder="Username"
+    autocomplete="off"
+  />
+
+  <input
+    required
+    id="email"
+    type="text"
+    formControlName="email"
+    [ngClass]="{ dirty: !!reigsterForm.value?.email }"
+    class="input"
+    placeholder="Email"
+    autocomplete="off"
+  />
+
+  <input
+    required
+    id="password"
+    type="password"
+    formControlName="password"
+    [ngClass]="{ dirty: !!reigsterForm.value?.password }"
+    class="input"
+    placeholder="Password"
+    autocomplete="off"
+  />
+
+  <input
+    required
+    id="retype-password"
+    type="password"
+    formControlName="retypePassword"
+    [ngClass]="{ dirty: !!reigsterForm.value?.retypePassword }"
+    class="input"
+    placeholder="retype password"
+    autocomplete="off"
+  />
+
+  <div class="button-group">
+    <button
+      type="button"
+      class="link"
+      routerLink="/login/register"
+      (click)="onFormTypeChange('signin')"
+    >
+      sign in
+    </button>
+
+    <button
+      type="submit"
+      class="submit"
+      [disabled]="!reigsterForm.valid">
+      Next
+    </button>
+  </div>
+</form>
