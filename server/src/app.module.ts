@@ -10,6 +10,7 @@ import { UserModule } from './user/user.module';
 import { ErrorModule } from './error/error.module';
 import { AuthModule } from './auth/auth.module';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { FileModule } from './file/file.module';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
     }),
     AuthModule,
     UserModule,
+    FileModule,
     ErrorModule,
     AuthenticationModule,
   ],
