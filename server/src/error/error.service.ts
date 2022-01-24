@@ -45,3 +45,12 @@ export class UnauthorizedException extends GeneralException {
     super('UNAUTHORIZED_ERROR', error, httpStatus);
   }
 }
+
+export class NotFoundException extends GeneralException {
+  constructor(
+    error?: any,
+    httpStatus: ErrorCode = ErrorCode.NOT_FOUND_DEFAULT,
+  ) {
+    super('NOT_FOUND_ERROR', error, httpStatus);
+  }
+}
